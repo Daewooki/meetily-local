@@ -1,0 +1,40 @@
+--- a/src/utilities/mergeAttributes.ts
++++ b/src/utilities/mergeAttributes.ts
+@@ -5,6 +5,7 @@
+       const mergedAttributes = { ...items }
+ 
+       Object.entries(item).forEach(([key, value]) => {
++        if (key === '__proto__' || key === 'constructor' || key === 'prototype') return
+         const exists = mergedAttributes[key]
+ 
+         if (!exists) {
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -314,6 +314,7 @@
+         .reduce((items, item) => {
+         const mergedAttributes = { ...items };
+         Object.entries(item).forEach(([key, value]) => {
++          if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
+             const exists = mergedAttributes[key];
+             if (!exists) {
+                 mergedAttributes[key] = value;
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -316,6 +316,7 @@
+         .reduce((items, item) => {
+         const mergedAttributes = { ...items };
+         Object.entries(item).forEach(([key, value]) => {
++          if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
+             const exists = mergedAttributes[key];
+             if (!exists) {
+                 mergedAttributes[key] = value;
+--- a/dist/index.umd.js
++++ b/dist/index.umd.js
+@@ -312,6 +312,7 @@
+           .reduce((items, item) => {
+           const mergedAttributes = { ...items };
+           Object.entries(item).forEach(([key, value]) => {
++            if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
+               const exists = mergedAttributes[key];
+               if (!exists) {
+                   mergedAttributes[key] = value;

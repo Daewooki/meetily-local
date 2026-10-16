@@ -1,0 +1,14 @@
+const assert = require('node:assert/strict');
+const { createRequire } = require('node:module');
+const blocknoteRequire = createRequire(require.resolve('@blocknote/core'));
+const { mergeAttributes } = blocknoteRequire('@tiptap/core');
+const malicious = JSON.parse('{"__proto__":{"onerror":"alert(1)","src":"bad"},"constructor":{"prototype":{"polluted":true}}}');
+const result = mergeAttributes({class:'first'}, malicious, {class:'second',title:'회의록'});
+assert.equal(Object.getPrototypeOf(result), Object.prototype);
+assert.equal(result.onerror, undefined);
+assert.equal(result.src, undefined);
+assert.equal(result.polluted, undefined);
+assert.equal(Object.hasOwn(result,'constructor'), false);
+assert.equal(result.class, 'first second');
+assert.equal(result.title, '회의록');
+console.log('Editor attribute prototype regression passed.');

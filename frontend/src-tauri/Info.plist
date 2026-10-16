@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>회의 음성을 이 Mac에서 녹음하고 전사하기 위해 마이크 접근이 필요합니다.</string>
+    <key>NSScreenCaptureUsageDescription</key>
+    <string>온라인 회의의 상대방 소리를 녹음하기 위해 시스템 오디오 기록 권한이 필요합니다.</string>
+    <key>NSAudioCaptureUsageDescription</key>
+    <string>온라인 회의의 상대방 소리를 이 Mac에서 전사하기 위해 시스템 오디오 접근이 필요합니다.</string>
+    <key>com.apple.security.device.audio-input</key>
+    <true/>
+</dict>
+</plist>

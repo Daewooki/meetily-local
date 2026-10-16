@@ -1,0 +1,111 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "Meetily Local",
+  "version": "1.0.0",
+  "identifier": "ai.meetily.local",
+  "build": {
+    "frontendDist": "../out",
+    "devUrl": "http://localhost:3118",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Meetily Local · 내 Mac의 회의록",
+        "width": 1240,
+        "height": 820,
+        "resizable": true,
+        "fullscreen": false,
+        "theme": "Light",
+        "decorations": true,
+        "url": "connections"
+      }
+    ],
+    "macOSPrivateApi": true,
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' asset: https://asset.localhost data:",
+        "connect-src": "'self' ipc: http://ipc.localhost"
+      },
+      "assetProtocol": {
+        "enable": true,
+        "scope": [
+          "$APPDATA/**"
+        ]
+      },
+      "capabilities": [
+        {
+          "identifier": "main",
+          "description": "Main window capability with file system and media access",
+          "windows": [
+            "main"
+          ],
+          "permissions": [
+            "fs:default",
+            "fs:allow-read-file",
+            "fs:read-all",
+            "fs:write-all",
+            "fs:allow-app-read",
+            "fs:allow-app-write",
+            "fs:allow-download-write",
+            "fs:allow-download-read",
+            "fs:scope-download",
+            "core:path:default",
+            "core:event:default",
+            "core:window:default",
+            "core:app:default",
+            "core:resources:default",
+            "core:menu:default",
+            "core:tray:default",
+            "core:window:allow-set-title",
+            "store:default",
+            "notification:default",
+            "notification:allow-is-permission-granted",
+            "process:default",
+            {
+              "identifier": "fs:scope",
+              "allow": [
+                {
+                  "path": "$APPDATA/*"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "app"
+    ],
+    "createUpdaterArtifacts": false,
+    "icon": [
+      "icons/icon.png",
+      "icons/app_icon.icns",
+      "icons/app_icon.ico"
+    ],
+    "resources": {
+      "templates/*.json": "templates/",
+      "licenses/*": "licenses/"
+    },
+    "externalBin": [
+      "binaries/llama-helper",
+      "binaries/ffmpeg"
+    ],
+    "macOS": {
+      "entitlements": "entitlements.plist",
+      "signingIdentity": "-",
+      "hardenedRuntime": true,
+      "minimumSystemVersion": "14.2"
+    },
+    "windows": {
+      "signCommand": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -FilePath %1"
+    }
+  },
+  "plugins": {}
+}
