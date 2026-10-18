@@ -35,11 +35,15 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: amd64
-      - uses: swatinem/rust-cache@v2
+      - uses: actions/cache/restore@v4
+        id: rust-cache
         with:
-          workspaces: '. -> target'
-          key: windows-local-cpu-v1
-          cache-on-failure: true
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target/release
+          key: windows-local-cpu-${{ hashFiles('Cargo.lock', '.github/force-portable-ggml.cmake', 'scripts/build-local-windows.ps1') }}
+          restore-keys: windows-local-cpu-
       - name: Check source snapshot
         run: python scripts/check-release-source.py
       - uses: msys2/setup-msys2@v2
@@ -75,3 +79,11 @@ jobs:
           path: release-artifacts/*
           if-no-files-found: error
           retention-days: 14
+      - uses: actions/cache/save@v4
+        if: ${{ always() && !cancelled() && steps.rust-cache.outputs.cache-hit != 'true' }}
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target/release
+          key: ${{ steps.rust-cache.outputs.cache-primary-key }}

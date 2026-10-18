@@ -37,7 +37,11 @@ New-Item -ItemType Directory -Force $crtStage | Out-Null
 Copy-Item "$crt/*.dll" $crtStage
 
 Push-Location frontend
-try { Invoke-Checked pnpm @('install', '--frozen-lockfile') } finally { Pop-Location }
+try {
+    Invoke-Checked pnpm @('install', '--frozen-lockfile')
+    # generate_context! embeds the static frontend even in release-mode Rust tests.
+    Invoke-Checked pnpm @('run', 'build')
+} finally { Pop-Location }
 Invoke-Checked python @('scripts/collect-license-notices.py', '--target', 'x86_64-pc-windows-msvc')
 
 if (-not $SkipTests) {
