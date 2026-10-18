@@ -1,5 +1,7 @@
 //! Explicit, user-triggered publishing. Tokens never leave native code after entry.
-//! The vault key lives in macOS Keychain; the on-disk token is AES-256-GCM ciphertext.
+//! The vault key lives in the OS credential store; on-disk tokens are AES-256-GCM ciphertext.
+#[cfg(target_os = "windows")]
+mod windows_vault;
 use aes_gcm::{
     aead::{Aead, Payload},
     Aes256Gcm, KeyInit, Nonce,
@@ -173,9 +175,14 @@ fn vault_key(create: bool) -> Result<Vec<u8>, String> {
     }
 }
 
-#[cfg(not(target_os = "macos"))]
+#[cfg(target_os = "windows")]
+fn vault_key(create: bool) -> Result<Vec<u8>, String> {
+    windows_vault::load_key("ai.meetily.local.atlassian-vault/aes256-key-v1", create)
+}
+
+#[cfg(not(any(target_os = "macos", target_os = "windows")))]
 fn vault_key(_: bool) -> Result<Vec<u8>, String> {
-    Err("현재 연결 저장은 macOS용으로 제공됩니다.".into())
+    Err("현재 연결 저장은 macOS와 Windows에서 제공됩니다.".into())
 }
 
 fn aad(connection: &Connection) -> String {
@@ -317,7 +324,7 @@ fn client() -> Result<Client, String> {
         .redirect(reqwest::redirect::Policy::none())
         .timeout(Duration::from_secs(25))
         .connect_timeout(Duration::from_secs(10))
-        .user_agent(concat!("Meetily-Local-Mac/", env!("CARGO_PKG_VERSION")))
+        .user_agent(concat!("Meetily-Local/", env!("CARGO_PKG_VERSION")))
         .build()
         .map_err(|_| "연결 클라이언트를 만들 수 없습니다.".into())
 }

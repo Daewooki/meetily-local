@@ -13,7 +13,7 @@ pub fn ensure_ffmpeg_binary() {
         .arg("-version")
         .output()
         .expect(
-            "Prepare the local sidecar with scripts/build-ffmpeg-local-mac.sh before building.",
+            "Prepare the bundled FFmpeg using the platform build script in scripts/ before building.",
         );
     assert!(
         output.status.success(),

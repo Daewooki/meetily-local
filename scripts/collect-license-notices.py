@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """Collect installed dependency notices for the locally built application."""
+import argparse
 import hashlib
 import json
 from pathlib import Path
 import shutil
 import subprocess
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--target', default='aarch64-apple-darwin')
+args = parser.parse_args()
 
 root = Path(__file__).resolve().parents[1]
 dest = root / 'frontend/src-tauri/licenses'
@@ -24,26 +29,26 @@ def collect(name, version, declared, directory):
         if path.stat().st_size > 2_000_000:
             continue
         try:
-            text = path.read_text()
+            text = path.read_text(encoding="utf-8")
         except (UnicodeError, OSError):
             continue
         digest = hashlib.sha256(text.encode()).hexdigest()
         item = groups.setdefault(digest, {'text': text, 'packages': set()})
         item['packages'].add(f'{name}@{version} — {relative}')
 
-meta = json.loads(subprocess.check_output(['cargo','metadata','--format-version','1','--locked','--filter-platform','aarch64-apple-darwin'],cwd=root))
+meta = json.loads(subprocess.check_output(['cargo','metadata','--format-version','1','--locked','--filter-platform',args.target],cwd=root))
 for pkg in meta['packages']:
     if pkg['source']:
         collect('cargo:'+pkg['name'],pkg['version'],pkg.get('license'),Path(pkg['manifest_path']).parent)
 for package in sorted((root/'frontend/node_modules/.pnpm').glob('*/node_modules/*/package.json')) + sorted((root/'frontend/node_modules/.pnpm').glob('*/node_modules/@*/*/package.json')):
-    data = json.loads(package.read_text())
+    data = json.loads(package.read_text(encoding="utf-8"))
     collect('npm:'+data['name'],data['version'],data.get('license'),package.parent)
 header = 'Installed dependency notices for Meetily Local. Includes build dependencies and platform alternatives. Individual license texts remain authoritative.\n\n'
 chunks = [header]
 for item in sorted(groups.values(),key=lambda x:sorted(x['packages'])[0]):
     chunks.append('\n'+'='*78+'\n'+'\n'.join(sorted(item['packages']))+'\n\n'+item['text']+'\n')
-(dest/'DEPENDENCY-NOTICES.txt').write_text(''.join(chunks))
-(dest/'dependency-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+(dest/'DEPENDENCY-NOTICES.txt').write_text(''.join(chunks),encoding='utf-8')
+(dest/'dependency-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 shutil.copyfile(root/'LICENSE.md',dest/'Meetily-LICENSE.txt')
 shutil.copyfile(root/'target/release-deps/ffmpeg-8.0.3/COPYING.LGPLv2.1',dest/'FFmpeg-LGPL-2.1.txt')
 shutil.copyfile(root/'THIRD_PARTY_NOTICES.md',dest/'THIRD_PARTY_NOTICES.md')
