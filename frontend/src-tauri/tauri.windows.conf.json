@@ -7,7 +7,8 @@
       "templates/*.json": "templates/",
       "licenses/*": "licenses/",
       "binaries/onnxruntime/*.dll": ".",
-      "binaries/onnxruntime/*LICENSE*": "licenses/"
+      "binaries/onnxruntime/*LICENSE*": "licenses/",
+      "binaries/msvc/*.dll": "."
     },
     "windows": {
       "webviewInstallMode": {

@@ -29,6 +29,13 @@ if (-not (Test-Path 'frontend/src-tauri/binaries/ffmpeg-x86_64-pc-windows-msvc.e
 Invoke-Checked cargo @('build', '--locked', '--release', '-p', 'llama-helper')
 Copy-Item 'target/release/llama-helper.exe' 'frontend/src-tauri/binaries/llama-helper-x86_64-pc-windows-msvc.exe'
 
+# Use the redistributable CRT from the selected MSVC installation, not DLLs found on PATH.
+$crt = Join-Path $env:VCToolsRedistDir 'x64/Microsoft.VC143.CRT'
+if (-not (Test-Path "$crt/vcruntime140.dll")) { throw 'Visual Studio 2022 x64 CRT redistributables are required.' }
+$crtStage = 'frontend/src-tauri/binaries/msvc'
+New-Item -ItemType Directory -Force $crtStage | Out-Null
+Copy-Item "$crt/*.dll" $crtStage
+
 Push-Location frontend
 try { Invoke-Checked pnpm @('install', '--frozen-lockfile') } finally { Pop-Location }
 Invoke-Checked python @('scripts/collect-license-notices.py', '--target', 'x86_64-pc-windows-msvc')
@@ -39,6 +46,8 @@ if (-not $SkipTests) {
         Invoke-Checked cargo @('test', '--locked', '--release', '-p', 'meetily', '--lib', $filter)
     }
     Invoke-Checked node @('frontend/tests/lib/editor-security.test.cjs')
+    Push-Location frontend
+    try { Invoke-Checked npx @('--yes', 'bun@1.3.14', 'test', 'tests') } finally { Pop-Location }
 }
 Push-Location frontend
 try { Invoke-Checked pnpm @('exec', 'tauri', 'build', '--bundles', 'nsis') } finally { Pop-Location }

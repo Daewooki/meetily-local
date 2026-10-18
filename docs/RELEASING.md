@@ -1,5 +1,7 @@
 # Apple Silicon Mac 빌드·릴리스
 
+Windows x64 빌드와 검증은 [Windows 안내](WINDOWS.md)를 따릅니다. 플랫폼별 검증 결과를 구분하고, 빌드 성공만으로 실제 녹음·모델 성능 검증이 완료됐다고 기록하지 않습니다.
+
 ## 빌드
 
 Apple Silicon Mac, macOS SDK/Xcode Command Line Tools, Node.js 22 이상, Rust stable, CMake, Python 3.11 이상, make를 준비합니다. 첫 빌드는 npm·Cargo·FFmpeg 소스를 내려받습니다.

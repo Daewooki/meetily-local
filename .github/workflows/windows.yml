@@ -53,6 +53,9 @@ jobs:
       - name: Build and test the Windows application
         shell: pwsh
         run: ./scripts/build-local-windows.ps1
+      - name: Test the installed application
+        shell: pwsh
+        run: ./scripts/test-windows-installer.ps1
       - name: Package corresponding source and checksums
         shell: pwsh
         run: |

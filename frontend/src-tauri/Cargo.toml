@@ -1,6 +1,6 @@
 [package]
 name = "meetily"
-version = "1.0.0"
+version = "1.1.0"
 description = "Meetily Local: on-device meeting notes with Atlassian publishing"
 authors = ["Sujith S"]
 license = "MIT"

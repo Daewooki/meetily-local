@@ -4,17 +4,21 @@ An independent community fork of [Meetily](https://github.com/Zackriya-Solutions
 
 [한국어 안내](README.ko.md) · [Mac setup and usage](docs/USAGE.md) · [한국어 사용법](LOCAL-MAC.md) · [Data handling](PRIVACY_POLICY.md) · [Contributing](CONTRIBUTING.md)
 
+## What this fork adds
+
+Local transcription and recording are inherited from Meetily Community. This fork focuses on reviewed Confluence/Jira publishing, evidence-checked Korean meeting notes and a local-only AI configuration. These additions are independent of the operating system.
+
 ## What it does
 
 - Record microphone and system audio, or import a recording.
 - Transcribe locally with Whisper and summarize locally with Qwen through a bundled inference helper.
 - Review and edit results, then explicitly publish a new Confluence page beneath a page or folder, or create a Jira issue.
-- Encrypt Atlassian tokens locally with AES-256-GCM and keep the key in macOS Keychain.
+- Encrypt Atlassian tokens locally with AES-256-GCM and keep the key in macOS Keychain or Windows Credential Manager.
 - Use a Korean meeting template that checks cited transcript evidence, names and deadlines. Custom templates are also supported; see [quality checks and limitations](docs/SUMMARY-QUALITY.md).
 
 After downloading models, transcription and summarization run offline. Model downloads and Atlassian operations use the network. Original recordings and full transcripts are not automatically attached to publication requests; content you place in the publication body is sent. External AI, usage telemetry and automatic update checks are disabled in this fork.
 
-## Supported distribution
+## Published distribution (1.0.0)
 
 | Requirement | Current target |
 | --- | --- |
@@ -23,7 +27,7 @@ After downloading models, transcription and summarization run offline. Model dow
 | Memory | 16 GB or more recommended |
 | Storage | At least 5 GB free, plus recording storage |
 
-Windows, Linux and Intel Mac packages are not provided by this fork. Contributions for those platforms are welcome. The original Meetily project has its own platform support and release schedule.
+Windows x64 support is being validated in the [Windows build workflow](https://github.com/Daewooki/meetily-local/actions/workflows/windows.yml). See [Windows setup and build instructions](docs/WINDOWS.md) for requirements and validation limits. The published 1.0.0 installers are for Apple Silicon Mac. Linux and Intel Mac packages are not provided; contributions are welcome. The original Meetily project has its own platform support and release schedule.
 
 ## Start here
 

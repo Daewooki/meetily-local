@@ -37,3 +37,15 @@ Tiptap 패치: `frontend/patches/@tiptap__core@2.27.2.patch`. `pnpm install --fr
 - [빌드·검증 명령](RELEASING.md)
 
 원시 검사 출력과 의존성 경로는 Git에서 제외한 `local-validation/v1-*-audit-*.json` 등에 보관합니다. 재현 시점의 고지 데이터베이스에 따라 결과는 달라질 수 있습니다.
+
+## Windows 확장 검토 (2026-10-19)
+
+Windows x64의 normal/build 의존성 경로를 별도로 확인했습니다.
+
+- `nnnoiseless`의 사용하지 않는 CLI 기본 기능을 끄면서 `clap 3`와 `atty`를 제거했습니다. 오디오 처리는 기존 `DenoiseState`를 유지합니다.
+- 사용처가 없는 직접 의존성 `esaxx-rs`를 제거했습니다. Windows MSVC의 정적/동적 CRT 혼합 가능성도 함께 제거됩니다.
+- `quick-xml 0.37.5`는 Windows 알림의 `tauri-winrt-notification` 경로에 있습니다. 이 버전의 해당 라이브러리에서는 텍스트/이미지 속성의 `escape` 함수만 사용하며, 고지 대상인 XML Reader/NamespaceResolver 파싱 경로는 호출하지 않습니다. 경고 자체를 무시 처리하지 않았으며, 상위 라이브러리 갱신을 추적합니다.
+- `rkyv`와 `rsa`는 Windows x64 normal/build 경로에서도 확인되지 않았습니다.
+- Windows 설치 파일은 ONNX Runtime, Microsoft Visual C++ 런타임과 WebView2를 포함합니다. 이 바이너리와 운영체제의 보안 업데이트는 Cargo/npm 검사 범위에 포함되지 않습니다.
+
+이 기록은 기존 Mac 1.0.0 배포 파일의 의존성 구성을 소급해서 변경하지 않습니다.
