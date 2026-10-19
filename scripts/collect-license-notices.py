@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -20,7 +21,18 @@ manifest = []
 def collect(name, version, declared, directory):
     manifest.append({'name': name, 'version': version, 'license': declared})
     # Preserve upstream text verbatim; native vendored dependencies also carry notices.
-    for path in directory.rglob('*'):
+    paths = []
+    for parent, directories, files in os.walk(directory, followlinks=False):
+        parent = Path(parent)
+        depth = len(parent.relative_to(directory).parts)
+        # Prune before walking. rglob + filtering still traverses nested dependencies
+        # and Windows junctions even when every resulting file will be discarded.
+        directories[:] = [child for child in directories if depth < 3
+            and child not in {'node_modules', '.git'}
+            and not (parent / child).is_symlink()
+            and not getattr(parent / child, 'is_junction', lambda: False)()]
+        paths.extend(parent / name for name in files)
+    for path in paths:
         relative = path.relative_to(directory)
         if len(relative.parts) > 4 or 'node_modules' in relative.parts:
             continue

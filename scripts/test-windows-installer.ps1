@@ -37,6 +37,8 @@ try {
 
 # Installed FFmpeg must handle local paths with spaces/non-ASCII and reject network protocols.
 $env:MEETILY_SMOKE_DIR = $directory
+python -c "import ctypes,os; from pathlib import Path; dll=ctypes.WinDLL(str(Path(os.environ['MEETILY_SMOKE_DIR'])/'onnxruntime.dll')); dll.OrtGetApiBase.restype=ctypes.c_void_p; assert dll.OrtGetApiBase(), 'ONNX Runtime API is unavailable'"
+if ($LASTEXITCODE -ne 0) { throw 'Installed ONNX Runtime could not be loaded.' }
 python -c "import os,wave; from pathlib import Path; p=Path(os.environ['MEETILY_SMOKE_DIR'])/'녹음 검사.wav'; w=wave.open(str(p),'wb'); w.setparams((1,2,16000,0,'NONE','not compressed')); w.writeframes(b'\0\0'*16000); w.close()"
 if ($LASTEXITCODE -ne 0) { throw 'Failed to prepare synthetic audio.' }
 & "$directory/ffmpeg.exe" -hide_banner -loglevel error -y -i "$directory/녹음 검사.wav" -c:a aac "$directory/변환 검사.m4a"

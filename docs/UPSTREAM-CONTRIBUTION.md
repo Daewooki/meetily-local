@@ -12,7 +12,7 @@ Create an upstream fork and a feature branch from its current `devtest`. Port th
 
 Offer optional Confluence Cloud / Jira Cloud connections and publication of a reviewed meeting summary or action item. Include classic and scoped token authentication, page/folder parent validation, account and scope errors, duplicate-submission handling, and documentation of exactly what is sent.
 
-The current implementation stores an AES key in macOS Keychain. Before offering the feature across all upstream platforms, agree on a supported credential-store abstraction or explicitly gate the initial feature to macOS. Translate connection/publishing labels to upstream's interface conventions. Do not introduce a plaintext credential fallback.
+The implementation stores an AES key in macOS Keychain or Windows Credential Manager. Before offering the feature across all upstream platforms, agree on the remaining Linux credential-store behavior and validate each platform. Translate connection/publishing labels to upstream's interface conventions. Do not introduce a plaintext credential fallback.
 
 A focused PR should include the native integration module, connection and review screens, command registration, required dependencies, synthetic tests and usage instructions. Preserve the original application's other providers, analytics preferences and update policy.
 

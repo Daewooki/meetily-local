@@ -46,14 +46,34 @@ jobs:
           restore-keys: windows-local-cpu-
       - name: Check source snapshot
         run: python scripts/check-release-source.py
+      - uses: actions/cache/restore@v4
+        id: ffmpeg-cache
+        with:
+          path: |
+            frontend/src-tauri/binaries/ffmpeg-x86_64-pc-windows-msvc.exe
+            target/release-deps/ffmpeg-8.0.3.tar.xz
+            target/release-deps/ffmpeg-8.0.3/COPYING.LGPLv2.1
+            frontend/src-tauri/licenses/MinGW-toolchain-notices.txt
+          key: windows-ffmpeg-${{ hashFiles('scripts/build-ffmpeg-local-windows.sh') }}
       - uses: msys2/setup-msys2@v2
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
         with:
           msystem: MINGW64
           update: true
           install: make nasm diffutils tar mingw-w64-x86_64-gcc
       - name: Build local-only FFmpeg from verified source
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
         shell: msys2 {0}
         run: bash scripts/build-ffmpeg-local-windows.sh
+      - uses: actions/cache/save@v4
+        if: steps.ffmpeg-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            frontend/src-tauri/binaries/ffmpeg-x86_64-pc-windows-msvc.exe
+            target/release-deps/ffmpeg-8.0.3.tar.xz
+            target/release-deps/ffmpeg-8.0.3/COPYING.LGPLv2.1
+            frontend/src-tauri/licenses/MinGW-toolchain-notices.txt
+          key: ${{ steps.ffmpeg-cache.outputs.cache-primary-key }}
       - name: Build and test the Windows application
         shell: pwsh
         run: ./scripts/build-local-windows.ps1

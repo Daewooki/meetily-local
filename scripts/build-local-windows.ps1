@@ -53,6 +53,10 @@ if (-not $SkipTests) {
     Push-Location frontend
     try { Invoke-Checked npx @('--yes', 'bun@1.3.14', 'test', 'tests') } finally { Pop-Location }
 }
+# Do not mix installers from a restored cache or a previous version into this build.
+if (Test-Path 'target/release/bundle/nsis') {
+    Remove-Item 'target/release/bundle/nsis' -Recurse -Force
+}
 Push-Location frontend
 try { Invoke-Checked pnpm @('exec', 'tauri', 'build', '--bundles', 'nsis') } finally { Pop-Location }
 Invoke-Checked node @('.github/verify-portable-ggml.cjs', 'target/release')

@@ -36,3 +36,18 @@ if objdump -p "$output" | grep -Ei 'DLL Name:.*(libgcc|libstdc|libwinpthread|msy
   echo 'FFmpeg has an undeclared runtime DLL dependency.' >&2
   exit 1
 fi
+# Preserve the toolchain runtime notices alongside the FFmpeg LGPL notice.
+notice_file="frontend/src-tauri/licenses/MinGW-toolchain-notices.txt"
+mkdir -p "$(dirname "$notice_file")"
+notice_count=0
+{
+  echo 'MSYS2 MinGW toolchain notices (includes build-only components).'
+  for notice in /mingw64/share/licenses/*/*; do
+    [[ -f "$notice" ]] || continue
+    echo
+    echo "===== ${notice#/mingw64/share/licenses/} ====="
+    cat "$notice"
+    notice_count=$((notice_count + 1))
+  done
+} > "$notice_file"
+[[ "$notice_count" -gt 0 ]] || { echo 'MinGW toolchain license notices are missing.' >&2; exit 1; }

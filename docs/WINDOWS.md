@@ -1,6 +1,6 @@
 # Windows x64 사용·빌드 안내
 
-Windows 지원은 1.1.0 변경 사항으로 검증 중입니다. 기존 1.0.0 DMG/ZIP은 Mac용입니다. [Windows CI](https://github.com/Daewooki/meetily-local/actions/workflows/windows.yml)의 성공한 실행에서 `meetily-local-windows-x64` 아티팩트를 받을 수 있으며, 실제 장비 검증 범위는 아래와 같이 구분합니다.
+Windows x64 CPU 지원은 1.1.0 변경 사항입니다. Windows CI에서 빌드·설치 검사가 통과했으며, 실제 녹음 장치와 처리 속도는 아래 수동 확인 범위에 남아 있습니다. 기존 1.0.0 DMG/ZIP은 Mac용입니다. [Windows CI](https://github.com/Daewooki/meetily-local/actions/workflows/windows.yml)의 성공한 실행에서 `meetily-local-windows-x64` 아티팩트를 받을 수 있으며, 실제 장비 검증 범위는 아래와 같이 구분합니다.
 
 ## 대상 환경
 

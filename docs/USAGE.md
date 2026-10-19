@@ -1,6 +1,6 @@
 # Meetily Local: Mac quick start
 
-This independent fork targets Apple Silicon Macs running macOS 14.2 or later. 16 GB RAM and 5 GB free space are recommended; recordings need additional storage. Windows, Linux and Intel Mac packages are not supplied by this fork.
+This independent fork targets Apple Silicon Macs running macOS 14.2 or later. 16 GB RAM and 5 GB free space are recommended; recordings need additional storage. For Windows x64 build and validation status, see [Windows instructions](WINDOWS.md). Linux and Intel Mac packages are not supplied by this fork.
 
 ## Install and prepare
 
