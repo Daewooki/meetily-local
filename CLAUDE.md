@@ -1,6 +1,6 @@
 # Meetily Local 개발 지침
 
-이 저장소는 Meetily Community 기반의 로컬 회의록 앱입니다. 현재 배포 대상은 Apple Silicon Mac / macOS 14.2 이상입니다.
+이 저장소는 Meetily Community 기반의 로컬 회의록 앱입니다. 1.0.0 배포 대상은 Apple Silicon Mac / macOS 14.2 이상이며, Windows x64 지원은 별도 CI로 검증합니다.
 
 ## 구성과 명령
 
@@ -9,6 +9,7 @@
 - `llama-helper`: 로컬 LLM 프로세스
 - `backend/`: 원본 참고용 코드, 이 배포판에서 실행하지 않음
 - 전체 빌드: `bash scripts/build-local-mac.sh`
+- Windows 빌드: `pwsh -File scripts/build-local-windows.ps1` (`docs/WINDOWS.md` 참고)
 - 패키징: `bash scripts/package-local-mac.sh`
 - 소스 배포 검사: `python3 scripts/check-release-source.py`
 - 검증·릴리스 절차: `docs/RELEASING.md`

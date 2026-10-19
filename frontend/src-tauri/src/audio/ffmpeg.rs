@@ -15,10 +15,20 @@ static FFMPEG_PATH: Lazy<Option<PathBuf>> = Lazy::new(|| {
     }
     #[cfg(debug_assertions)]
     {
-        let dev =
-            PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("binaries/ffmpeg-aarch64-apple-darwin");
-        if cfg!(target_os = "macos") && dev.is_file() {
-            return Some(dev);
+        let name = if cfg!(all(target_os = "macos", target_arch = "aarch64")) {
+            Some("ffmpeg-aarch64-apple-darwin")
+        } else if cfg!(all(target_os = "windows", target_arch = "x86_64")) {
+            Some("ffmpeg-x86_64-pc-windows-msvc.exe")
+        } else {
+            None
+        };
+        if let Some(name) = name {
+            let dev = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+                .join("binaries")
+                .join(name);
+            if dev.is_file() {
+                return Some(dev);
+            }
         }
     }
     log::error!("Bundled FFmpeg is missing. Reinstall the complete Meetily Local app.");

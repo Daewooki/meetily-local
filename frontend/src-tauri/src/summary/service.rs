@@ -353,7 +353,7 @@ impl SummaryService {
         // Reject before any API key lookup or remote model metadata request.
         if model_provider != "builtin-ai" {
             Self::fail_and_cleanup(&pool, &meeting_id, started_at,
-                "이 버전은 이 Mac의 내장 AI 모델만 사용합니다.").await;
+                "이 버전은 이 PC의 내장 AI 모델만 사용합니다.").await;
             return;
         }
         info!(

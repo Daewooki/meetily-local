@@ -1,10 +1,10 @@
 # Meetily Local
 
-각자의 Mac에서 회의를 녹음·전사·요약하고, 검토한 내용을 Confluence와 Jira에 게시하는 데스크톱 앱입니다. [Meetily Community](https://github.com/Zackriya-Solutions/meetily)를 기반으로 만든 독립적인 커뮤니티 포크이며, 공식 Meetily 배포판이나 Atlassian 제품은 아닙니다.
+각자의 PC에서 회의를 녹음·전사·요약하고, 검토한 내용을 Confluence와 Jira에 게시하는 데스크톱 앱입니다. [Meetily Community](https://github.com/Zackriya-Solutions/meetily)를 기반으로 만든 독립적인 커뮤니티 포크이며, 공식 Meetily 배포판이나 Atlassian 제품은 아닙니다.
 
 [사용법](LOCAL-MAC.md) · [영상 안내](docs/VIDEO-GUIDE.md) · [통신 범위](NETWORK-POLICY.md) · [검증 기록](LOCAL-VALIDATION.md) · [기여 안내](CONTRIBUTING.md)
 
-## 사용 환경
+## 공개된 설치 파일의 사용 환경 (1.0.0)
 
 | 항목 | 사양 |
 | --- | --- |
@@ -13,7 +13,11 @@
 | 메모리 | 16GB 이상 권장 |
 | 저장 공간 | 5GB 이상 + 녹음 저장 공간 별도 |
 
-현재 Windows·Linux·Intel Mac 설치 파일은 제공하지 않습니다. 다른 운영체제 지원과 검증에 참여해 주실 분을 환영합니다.
+Windows x64 지원은 [자동 빌드](https://github.com/Daewooki/meetily-local/actions/workflows/windows.yml)로 검증 중입니다. [Windows 사용·빌드 안내](docs/WINDOWS.md)에서 사양과 검증 범위를 확인하세요. 기존 1.0.0 설치 파일은 Apple Silicon Mac용입니다. Linux·Intel Mac은 아직 배포하지 않으며, 플랫폼 지원과 검증에 참여해 주실 분을 환영합니다.
+
+## 이 포크에서 추가한 것
+
+로컬 녹음·전사·요약 엔진은 원본 Meetily Community의 기능입니다. 이 포크는 **검토 후 Wiki·Jira 게시**, **원문 근거를 확인하는 한국어 회의록**, **외부 AI 호출을 제한한 설정**에 집중합니다.
 
 ## 할 수 있는 일
 
@@ -25,7 +29,7 @@
 
 모델 약 3.3GB를 준비하면 전사·요약은 오프라인으로 동작합니다. 모델 다운로드와 Atlassian 연결·조회·게시에는 네트워크를 사용합니다. 녹음과 전체 전사문은 자동 업로드하지 않으며, 게시 본문에 직접 넣은 내용은 전송됩니다.
 
-API 토큰은 AES-256-GCM으로 암호화하고 키는 macOS Keychain에 보관합니다. 녹음·회의 DB 전체 암호화는 현재 앱에서 제공하지 않습니다. 사용 통계, 자동 업데이트 확인, 외부 AI 호출은 비활성화했습니다.
+API 토큰은 AES-256-GCM으로 암호화하고 키는 macOS Keychain 또는 Windows 자격 증명 관리자에 보관합니다. 녹음·회의 DB 전체 암호화는 현재 앱에서 제공하지 않습니다. 사용 통계, 자동 업데이트 확인, 외부 AI 호출은 비활성화했습니다.
 
 ## 설치와 사용
 

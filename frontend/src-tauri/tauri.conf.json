@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Meetily Local",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "identifier": "ai.meetily.local",
   "build": {
     "frontendDist": "../out",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "Meetily Local · 내 Mac의 회의록",
+        "title": "Meetily Local · 내 PC의 회의록",
         "width": 1240,
         "height": 820,
         "resizable": true,
@@ -102,9 +102,6 @@
       "signingIdentity": "-",
       "hardenedRuntime": true,
       "minimumSystemVersion": "14.2"
-    },
-    "windows": {
-      "signCommand": "powershell -ExecutionPolicy Bypass -File scripts/sign-windows.ps1 -FilePath %1"
     }
   },
   "plugins": {}

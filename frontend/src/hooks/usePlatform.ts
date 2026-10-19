@@ -32,7 +32,8 @@ function detectPlatformFromUserAgent(): Platform {
  * @returns The current platform
  */
 export function usePlatform(): Platform {
-  const [currentPlatform, setCurrentPlatform] = useState<Platform>(() => detectPlatformFromUserAgent());
+  // Match the static HTML on the first render; detect after hydration.
+  const [currentPlatform, setCurrentPlatform] = useState<Platform>('unknown');
 
   useEffect(() => {
     async function detectPlatform() {

@@ -223,7 +223,7 @@ export function PreferenceSettings() {
       {/* Analytics Section */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
         <h3 className="text-lg font-semibold">로컬 데이터 처리</h3>
-        <p className="mt-2 text-sm leading-6 text-gray-600">사용 통계 전송과 자동 업데이트 확인은 비활성화되어 있습니다. 전사·요약은 이 Mac에서 처리합니다. 모델 다운로드와 직접 실행한 Wiki·Jira 조회·게시에는 네트워크를 사용합니다.</p>
+        <p className="mt-2 text-sm leading-6 text-gray-600">사용 통계 전송과 자동 업데이트 확인은 비활성화되어 있습니다. 전사·요약은 이 PC에서 처리합니다. 모델 다운로드와 직접 실행한 Wiki·Jira 조회·게시에는 네트워크를 사용합니다.</p>
       </div>
     </div>
   )

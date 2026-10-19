@@ -874,7 +874,7 @@ export function ModelSettingsModal({
                 <SelectValue placeholder="Select provider" />
               </SelectTrigger>
               <SelectContent className="max-h-64 overflow-y-auto">
-                <SelectItem value="builtin-ai">내장 AI · 이 Mac에서 요약</SelectItem>
+                <SelectItem value="builtin-ai">내장 AI · 이 PC에서 요약</SelectItem>
               </SelectContent>
             </Select>
 

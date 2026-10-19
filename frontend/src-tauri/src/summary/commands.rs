@@ -474,7 +474,7 @@ pub async fn api_process_transcript<R: Runtime>(
     _auth_token: Option<String>,
 ) -> Result<ProcessTranscriptResponse, String> {
     if model != "builtin-ai" {
-        return Err("이 버전은 이 Mac의 내장 AI 모델만 사용합니다. 외부 AI 연결은 허용되지 않습니다.".into());
+        return Err("이 버전은 이 PC의 내장 AI 모델만 사용합니다. 외부 AI 연결은 허용되지 않습니다.".into());
     }
     use uuid::Uuid;
 

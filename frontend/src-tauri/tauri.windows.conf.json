@@ -1,8 +1,28 @@
 {
   "bundle": {
+    "targets": [
+      "nsis"
+    ],
     "resources": {
-      "templates": "templates",
-      "binaries/onnxruntime": "."
+      "templates/*.json": "templates/",
+      "licenses/*": "licenses/",
+      "binaries/onnxruntime/*.dll": ".",
+      "binaries/onnxruntime/*LICENSE*": "licenses/",
+      "binaries/msvc/*.dll": "."
+    },
+    "windows": {
+      "webviewInstallMode": {
+        "type": "offlineInstaller",
+        "silent": true
+      },
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": [
+          "English",
+          "Korean"
+        ],
+        "displayLanguageSelector": true
+      }
     }
   }
 }

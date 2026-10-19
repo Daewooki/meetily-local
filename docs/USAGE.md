@@ -1,6 +1,6 @@
 # Meetily Local: Mac quick start
 
-This independent fork targets Apple Silicon Macs running macOS 14.2 or later. 16 GB RAM and 5 GB free space are recommended; recordings need additional storage. Windows, Linux and Intel Mac packages are not supplied by this fork.
+This independent fork targets Apple Silicon Macs running macOS 14.2 or later. 16 GB RAM and 5 GB free space are recommended; recordings need additional storage. For Windows x64 build and validation status, see [Windows instructions](WINDOWS.md). Linux and Intel Mac packages are not supplied by this fork.
 
 ## Install and prepare
 
@@ -49,8 +49,8 @@ The original recording and full transcript are not automatically attached. Anyth
 
 ## Storage and troubleshooting
 
-Tokens are encrypted with AES-256-GCM using a macOS Keychain key. Meeting databases and recording files are not encrypted by the app. Data lives under `~/Library/Application Support/ai.meetily.local/`; recording storage can be selected separately. Network accessibility depends on your Atlassian tenant and organization.
+Tokens are encrypted with AES-256-GCM using a macOS Keychain key or a Windows Credential Manager key. Meeting databases and recording files are not encrypted by the app. Data lives under `~/Library/Application Support/ai.meetily.local/` on Mac, or `%APPDATA%\ai.meetily.local` on Windows; recording storage can be selected separately. Network accessibility depends on your Atlassian tenant and organization.
 
 For 401 errors, check email, expiration and token type. For 403 errors, check both token scopes and account permissions. For folder failures, confirm folder-read scope, ID and Space membership. For missing board issues, check the project first and then board filters.
 
-[Detailed Korean guide](../LOCAL-MAC.md) · [Data handling](../PRIVACY_POLICY.md) · [Network behavior](../NETWORK-POLICY.md) · [Contributing](../CONTRIBUTING.md)
+[Windows setup/build](WINDOWS.md) · [Detailed Korean guide](../LOCAL-MAC.md) · [Data handling](../PRIVACY_POLICY.md) · [Network behavior](../NETWORK-POLICY.md) · [Contributing](../CONTRIBUTING.md)
